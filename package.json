@@ -1,0 +1,20 @@
+{
+  "name": "capstone_design",
+  "version": "1.0.0",
+  "description": "for capstone",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "date-and-time": "^0.6.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {},
+  "author": "",
+  "license": "ISC"
+}

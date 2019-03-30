@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>20141584_capstone_design</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <!--link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/agency.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Jung Hyun Tae</a>
+      <!-- button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button -->
+      <!--div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div-->
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+	<div>
+		<div>
+			<div>
+				<span id = "date_range"></span>
+			
+			<div>
+				<div class="" id="chart_div"></div>
+			</div>
+		</div>
+	</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/agency.min.js"></script>
+  <script src="https://code.jquery.com/jquery.min.js"></script> 
+  <script>
+/*
+	var tempData = '<%= dataa %>';
+	var max = '<%= max %>';
+	var min = '<%= min %>;
+	var temp = tempData.split(',');
+	var dataa = [];
+
+	max = max.split(',')[0].split('/');
+	min = min.split(',')[0].split('/');
+	document.getElementById('date_range').innerHTML = new Date(min[0], parseInt(min[1])-1, min[2], min[3], min[4])+' ~ '+new Date(max[0], parseInt(max[1])-1, max[2], max[3], max[4]);
+	for (var i = 0 ; i < temp.length-1;i=i+2)
+	{
+		var resulttmp = [];
+		var tmp = temp[i].split('/');
+		resulttmp.push(new Date(tmp[0],parseInt(tmp[1])-1, tmp[2], tmp[3], tmp[4]));
+		resulttmp.push(parseFloat(temp[i+1]));
+		dataa.push(resulttmp);
+	}
+	console.log(dataa);
+	google.charts.load('current', {packages:['corechart', 'line']});
+	google.charts.setOnLoadCallback(drawBasic);
+
+	function drawBasic()
+	{
+		var data = new google.visualization.DataTable();
+		data.addColumn('datetime', 'X');
+		data.addColumn('number', 'Temperature');
+
+		data.addRows(dataa);
+
+		var options = {
+			hAxis: {title : 'Time'},
+			vAxis: {title : 'Temperature'},
+			width : 900,
+			height : 450,
+			pointShape : 'diamond'
+		};
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	}*/
+	var dataa = <%-JSON.stringify(dataa)%>
+	var max = '<%=min%>';
+	var min = '<%=max%>';
+	Date.prototype.minusHours = function(h){
+		this.setHours(this.getHours()-h);
+		return this;
+	}
+	
+	document.getElementById('date_range').innerHTML = min.slice(0,-18)+' ~ ' + max.slice(0,-18);
+	var result = [];
+	for(var i = 0l i< dataa.length; i++)
+	{
+		var resulttmp = [];
+		resulttmp.push(new Date(dataa[i].time).minusHours(9));
+		resulttmp.push(dataa[i].value);
+		result.push(resulttmp);
+	}
+	
+	google.charts.load('current', {packages: ['corechart', 'line']});
+	google.charts.setOnLoadCallback(drawBasic);
+
+	function drawBasic() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('datetime', 'X');
+		data.addColumn('number', 'Temperature');
+
+		data.addRows(result);
+
+		var options = {
+			hAxis : {title:'Time'},
+			vAxis : {title : 'Temperature'},
+			legend : {position : 'bottom'},
+			width : 800,
+			height : 300,
+			pointSize : 5                
+		};
+
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+		chart.draw(data, options);
+	}
+  </script>
+</body>
+
+</html>
